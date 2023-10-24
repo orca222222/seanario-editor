@@ -1,5 +1,5 @@
 //ここからGPT
-//30行目の'あ'を消したいけど、消すと動かなくなるので困っている。
+//エンターを押した時に改行できるように。
 document.addEventListener("DOMContentLoaded", function () {
     // Enterキーの押下をリッスン
     document.addEventListener("keydown", function (event) {
@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
         var characterName = newEditor.querySelector(".character p");
         var scenarioContent = newEditor.querySelector(".scenario p");
         if (characterName && scenarioContent) {
+            //'あ'を消したいけど、消すと動かなくなるので困っている。
             characterName.textContent = "あ";
             scenarioContent.textContent = "";
         } else {
@@ -36,9 +37,16 @@ document.addEventListener("DOMContentLoaded", function () {
         // 新しいエディターを.itemsコンテナに追加
         var itemsContainer = document.querySelector(".items");
         if (itemsContainer) {
-            // 最初の子要素の前に新しいエディターを挿入
-            var firstEditor = itemsContainer.querySelector(".editor");
-            itemsContainer.insertBefore(newEditor, firstEditor);
+            // フォーカスされているエディターを取得
+            var focusedEditor = document.activeElement.closest('.editor');
+
+            // フォーカスされているエディターの前に新しいエディターを挿入
+            if (focusedEditor) {
+                itemsContainer.insertBefore(newEditor, focusedEditor);
+            } else {
+                // フォーカスされているエディターがない場合は先頭に挿入
+                itemsContainer.insertBefore(newEditor, itemsContainer.firstElementChild);
+            }
 
             // 追加した.editor内の.character要素にフォーカスを設定
             var newCharacter = newEditor.querySelector(".character");
@@ -49,6 +57,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 range.selectNodeContents(newCharacter);
                 selection.removeAllRanges();
                 selection.addRange(range);
+
+                // キャラクター要素にフォーカスを設定
+                newCharacter.focus();
             }
         } else {
             console.error(".itemsコンテナが見つかりません。");
@@ -56,22 +67,61 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-//ここまでGPT
-
-
-//登場人物名変数
-var character1 = "登場人物1";
-var character2 = "登場人物2";
-var character3 = "登場人物3";
-var character4 = "登場人物4";
-var character5 = "登場人物5";
-var character6 = "登場人物6";
-var character7 = "登場人物7";
-var character8 = "登場人物8";
-var character9 = "登場人物9";
-var character0 = "登場人物10";
-
 //十字キーの方向修正
+
+
+
+//登場人物入力
+// 10個の変数を作成し、初期化
+var character1 = "登場人物１";
+var character2 = "登場人物２";
+var character3 = "登場人物３";
+var character4 = "登場人物４";
+var character5 = "登場人物５";
+var character6 = "登場人物６";
+var character7 = "登場人物７";
+var character8 = "登場人物８";
+var character9 = "登場人物９";
+var character10 = "登場人物１０";
+
+document.addEventListener("keydown", function (event) {
+    // Ctrlキーが押されているか確認
+    if (event.ctrlKey) {
+        // 数字キーが押されたか確認
+        var numberKey = parseInt(event.key, 10);
+        if (!isNaN(numberKey) && numberKey >= 1 && numberKey <= 9) {
+            // 対応する変数に格納された文字列をcontenteditableな要素に入力
+            setInputValue(numberKey);
+            // デフォルトの動作をキャンセル
+            event.preventDefault();
+        } else if (event.key === "0") {
+            // Ctrl+0が押された場合、対応する変数に格納された文字列をcontenteditableな要素に入力
+            setInputValue(10);
+            // デフォルトの動作をキャンセル
+            event.preventDefault();
+        }
+    }
+});
+
+function setInputValue(number) {
+    var character = window["character" + number];
+    var editableElement = document.querySelector("[contenteditable=true]"); // contenteditableな要素を取得
+    if (editableElement) {
+        // 既存の内容を削除してから新しい文字列を挿入
+        editableElement.innerHTML = "";
+        editableElement.appendChild(document.createTextNode(character));
+    }
+    // ここで取得した文字列をcontenteditableな要素に入力する処理を実装
+}
+
+
+
+
+
+
+
+
+//ここまでGPT
 
 
 
@@ -79,14 +129,7 @@ var character0 = "登場人物10";
 //p要素の作成
 let p_element = document.createElement('p');
 
-/*
-//一行の入力
-let editor = document.getElementById('editor');
 
-
-//改行
-var test = document.createElement(editor);
-*/
 
 
 
