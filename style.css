@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Noto+Serif+JP:400,700&display=swap);
+
 *{
 	margin: 0;
 	padding: 0;
@@ -6,25 +8,33 @@
 header {
 	width: 100%;
 	height: 50px;
-	background-color: rgb(190, 220, 0);
+	background-color: rgb(210, 220, 0);
+}
+.items {
+	display: flex;
+	float: right;
+	margin-right: 10px;
 }
 
-.character {
+.editor {
 	writing-mode: vertical-rl;
 	-webkit-writing-mode: vertical-rl;
   	-ms-writing-mode: vertical-rl;
-
-  	font-size: 20px;
-  	font-family: "Noto Serif JP", serif;
+	font-size: 20px;
+	font-family: "Noto Serif JP", serif;
   	-webkit-font-smoothing: antialiased;
   	-moz-osx-font-smoothing: grayscale;
   	-webkit-font-feature-settings: "palt";
   	font-feature-settings: "palt";
   	color: #2c3e50;
   	line-height: 1.2em;
-  	text-indent: 0.5em;
-  	outline: none;
 
+  	display: flex;
+}
+.character {	
+  	text-indent: 0em;
+  	padding-top: 0.5em;
+  	/*outline: none;*/
 
 	background-color: white;
 	width: 99.5%;
@@ -39,30 +49,25 @@ header {
 
 
 .scenario {
-	writing-mode: vertical-rl;
-	-webkit-writing-mode: vertical-rl;
-  	-ms-writing-mode: vertical-rl;
-  	
-  	font-size: 20px;
-  	font-family: "Noto Serif JP", serif;
-  	-webkit-font-smoothing: antialiased;
-  	-moz-osx-font-smoothing: grayscale;
-  	-webkit-font-feature-settings: "palt";
-  	font-feature-settings: "palt";
-  	color: #2c3e50;
-  	line-height: 1.2em;
-  	text-indent: 1em;
-  	outline: none;
+
+  	text-indent: 0em;
+  	padding-top: 1em;
+  	/*outline: none;*/
 
 	background-color: white;
 	width: 99.5%;
-	height: 530px;
+	height: 520px;
 }
 
 
+
+
 /*
-・なんか文字が右左にずれるんだけど、どう直せば良いと思う？
-？とかトとかが特にずれる。
-・改行をしたときと、文章が二行目になったときで行の幅が違うのを直したい。
+文字を上に詰めたい時は左詰め
+文字を下に詰めたい時は右詰め
+になるっていう、感覚との名称差えぐ。縦書きやばい。
+
+同様に十字キーを押した時に、横書き基準で動くせいで、
+コントローラー逆持ちドッキリみたいになる。
 
 */
