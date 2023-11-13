@@ -10,6 +10,19 @@ header {
 	height: 50px;
 	background-color: rgb(210, 220, 0);
 }
+
+header button {
+	height: 40px;
+	outline: none;
+	margin: 5px -5px 5px 5px;
+	border: none;
+}
+
+header button img{
+	height: 100%;
+	outline: none;
+}
+
 .items {
 	display: flex;
 	float: right;
@@ -35,7 +48,7 @@ header {
   	text-indent: 0em;
   	padding-top: 0.5em;
   	padding-bottom: 0.5em;
-  	outline: none;
+  	/*outline: none;*/
 
 	background-color: white;
 	width: 99.5%;
@@ -53,11 +66,11 @@ header {
 
   	text-indent: 0em;
   	padding-top: 1em;
-  	outline: none;
+  	/*outline: none;*/
 
 	background-color: white;
 	width: 99.5%;
-	height: 520px;
+	height: 480px;
 }
 
 

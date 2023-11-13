@@ -67,6 +67,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+//tabを押した時、どんどん戻ってしまうのを直したい。
+//全体を選択してbackspaceできないとか、backspaceで前のdivに移動できないとか直したい。
+
 //十字キーの方向修正
 
 
@@ -115,13 +118,17 @@ function setInputValue(number) {
 }
 
 
-
-
-
-
-
-
 //ここまでGPT
+
+//ボタンを押して変数の変更
+
+document.getElementById("button1").addEventListener("click",function() {
+	
+	let userInput = document.getElementById("userInput").value;
+	if (userInput.trim() !== "") {
+		character1 = userInput;
+	}
+})
 
 
 
