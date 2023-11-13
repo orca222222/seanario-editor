@@ -25,7 +25,7 @@ header button img{
 
 .items {
 	display: flex;
-	float: right;
+	flex-direction: row-reverse;
 	margin-right: 10px;
 }
 
@@ -41,19 +41,19 @@ header button img{
   	font-feature-settings: "palt";
   	color: #2c3e50;
   	line-height: 1.2em;
-
   	display: flex;
+	
 }
 .character {	
   	text-indent: 0em;
-  	padding-top: 0.5em;
-  	padding-bottom: 0.5em;
+  	margin-top: 0.5em;
+  	margin-bottom: 0.5em;
   	/*outline: none;*/
 
 	background-color: white;
 	width: 99.5%;
 	height: 120px;
-	
+	min-width: 24px;
 }
 .divideline {
 	background-color: darkgray;
@@ -65,7 +65,7 @@ header button img{
 .scenario {
 
   	text-indent: 0em;
-  	padding-top: 1em;
+  	margin-top: 1em;
   	/*outline: none;*/
 
 	background-color: white;

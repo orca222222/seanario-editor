@@ -46,16 +46,12 @@
     textareaだと、縦書きがfirefox以外対応してないらしく駄目なので、編集可能なdivで対応する。
     -->
     <div class="items">
-      <div class="editor">
+      <div class="editor" style="display: none">
         <!--キャラクター名-->
-        <div class="character" contenteditable="true">
-          <p>名前</p>
-        </div>
+        <p class="character" contenteditable="true"></p>
         <div class="divideline"></div>
         <!--脚本-->
-        <div class="scenario" contenteditable="true">
-            <p>ここに文章を書けば良い</p>
-        </div>
+        <p class="scenario" contenteditable="true"></p>
       </div>
     </div>
     

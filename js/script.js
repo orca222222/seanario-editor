@@ -23,16 +23,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         var newEditor = templateEditor.cloneNode(true);
 
-        // 新しいエディター内のコンテンツをリセット
-        var characterName = newEditor.querySelector(".character p");
-        var scenarioContent = newEditor.querySelector(".scenario p");
-        if (characterName && scenarioContent) {
-            //'あ'を消したいけど、消すと動かなくなるので困っている。
-            characterName.textContent = "あ";
-            scenarioContent.textContent = "";
-        } else {
-            console.error("エディター内の要素が見つかりません。");
-        }
+        // テンプレートのdisplay: noneを解除している
+        newEditor.style = '';
 
         // 新しいエディターを.itemsコンテナに追加
         var itemsContainer = document.querySelector(".items");
@@ -40,12 +32,12 @@ document.addEventListener("DOMContentLoaded", function () {
             // フォーカスされているエディターを取得
             var focusedEditor = document.activeElement.closest('.editor');
 
-            // フォーカスされているエディターの前に新しいエディターを挿入
+            // フォーカスされているエディターの後ろに新しいエディターを挿入
             if (focusedEditor) {
-                itemsContainer.insertBefore(newEditor, focusedEditor);
+                focusedEditor.after(newEditor);
             } else {
-                // フォーカスされているエディターがない場合は先頭に挿入
-                itemsContainer.insertBefore(newEditor, itemsContainer.firstElementChild);
+                // フォーカスされているエディターがない場合は最後に挿入
+                itemsContainer.appendChild(newEditor);
             }
 
             // 追加した.editor内の.character要素にフォーカスを設定
@@ -65,9 +57,11 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error(".itemsコンテナが見つかりません。");
         }
     }
+
+    // 最初にひとつ追加しておく
+    createEditor();
 });
 
-//tabを押した時、どんどん戻ってしまうのを直したい。
 //全体を選択してbackspaceできないとか、backspaceで前のdivに移動できないとか直したい。
 
 //十字キーの方向修正
@@ -129,16 +123,6 @@ document.getElementById("button1").addEventListener("click",function() {
 		character1 = userInput;
 	}
 })
-
-
-
-
-//p要素の作成
-let p_element = document.createElement('p');
-
-
-
-
 
 /*
 //以下登場人物名入力ショートカット
