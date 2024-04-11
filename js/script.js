@@ -70,6 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //登場人物入力
 // 10個の変数を作成し、初期化
+var character0 = "";
 var character1 = "登場人物１";
 var character2 = "登場人物２";
 var character3 = "登場人物３";
@@ -101,14 +102,29 @@ document.addEventListener("keydown", function (event) {
 });
 
 function setInputValue(number) {
-    var character = window["character" + number];
-    var editableElement = document.querySelector("[contenteditable=true]"); // contenteditableな要素を取得
-    if (editableElement) {
-        // 既存の内容を削除してから新しい文字列を挿入
-        editableElement.innerHTML = "";
-        editableElement.appendChild(document.createTextNode(character));
+    var character = window["character" + number]; // 対応する文字列を取得
+    var selection = document.getSelection(); // 現在の選択範囲を取得
+
+    // 選択範囲があるか、選択範囲がテキストを含むか確認
+    if (selection.rangeCount > 0 && selection.anchorNode) {
+        var node = selection.anchorNode; // 選択範囲の開始ノード
+        var editableElement = null;
+
+        // nodeがcontenteditableの要素であるか、もしくはその親要素を探索
+        while (node != null) {
+            if (node.nodeType === 1 && node.getAttribute("contenteditable") === "true") {
+                editableElement = node; // contenteditable要素を見つけた
+                break;
+            }
+            node = node.parentNode; // 親ノードへ移動
+        }
+
+        // contenteditable要素が見つかった場合、その内容を更新
+        if (editableElement) {
+            editableElement.innerHTML = ""; // 既存の内容を削除
+            editableElement.appendChild(document.createTextNode(character)); // 新しい文字列を挿入
+        }
     }
-    // ここで取得した文字列をcontenteditableな要素に入力する処理を実装
 }
 
 
@@ -123,24 +139,3 @@ document.getElementById("button1").addEventListener("click",function() {
 		character1 = userInput;
 	}
 })
-
-/*
-//以下登場人物名入力ショートカット
-$(function() {
-
-	shortcut.add("Ctrl+1",function() {
-		$("#button").click();
-		p_element.textContest = '登場人物1';
-	});
-	
-});
-
-$(function() {
-
-	shortcut.add("Ctrl+2",function() {
-		$("#button").click();
-	});
-	
-});
-
-*/
