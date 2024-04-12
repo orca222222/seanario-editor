@@ -107,6 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	        if (targetEditor) {
 	            targetEditor.focus();
+	            moveCursorToEnd(targetEditor); // カーソルを要素の最後に移動
 	            event.preventDefault(); // デフォルトのキー操作をキャンセル
 	        }
 	    }
