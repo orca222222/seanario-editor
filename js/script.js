@@ -34,29 +34,51 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 	*/
     //backspaceの処理
-	document.addEventListener("keydown", function (event) {
-	    if (event.key === "Backspace" && event.target.getAttribute("contenteditable") === "true" && event.target.textContent.trim() === "") {
-	        event.preventDefault(); // デフォルトのバックスペースの挙動をキャンセル
-	        var editorDiv = event.target.closest('.editor'); // 親の `.editor` 要素を取得
-	        if (editorDiv) {
-	            // 前の `editor` 要素を取得
-	            var previousEditor = editorDiv.previousElementSibling;
+    document.addEventListener("keydown", function (event) {
+	    if (event.key === "Backspace" && event.target.getAttribute("contenteditable") === "true") {
+	        var focusedElement = event.target;
+	        var textContent = focusedElement.textContent.trim();
 
-	            editorDiv.remove(); // `.editor` 要素を削除
+	        if (textContent === "") {
+	            event.preventDefault(); // デフォルトのバックスペースの挙動をキャンセル
+	            var editorDiv = focusedElement.closest('.editor'); // 親の `.editor` 要素を取得
 
-	            // 前の `editor` 要素にフォーカスを移動するための処理
-	            if (previousEditor && previousEditor.classList.contains('editor')) {
-	                var editableContent = previousEditor.querySelector('[contenteditable="true"]');
-	                if (editableContent) {
-	                    editableContent.focus();
-
-	                    // カーソルを要素の最後に移動
+	            // もしfocusされている要素がscenarioで、空の場合、前のcharacter要素にフォーカスを移動
+	            if (focusedElement.classList.contains('scenario')) {
+	                var previousCharacter = editorDiv.querySelector('.character[contenteditable="true"]');
+	                if (previousCharacter) {
+	                    previousCharacter.focus();
 	                    var range = document.createRange();
 	                    var sel = window.getSelection();
-	                    range.selectNodeContents(editableContent);
+	                    range.selectNodeContents(previousCharacter);
 	                    range.collapse(false); // false は range の末尾にカーソルを設定
 	                    sel.removeAllRanges();
 	                    sel.addRange(range);
+	                    return; // この処理で終了
+	                }
+	            }
+
+	            // 通常のエディタ削除の処理
+	            if (editorDiv) {
+	                // 前の `editor` 要素を取得
+	                var previousEditor = editorDiv.previousElementSibling;
+
+	                editorDiv.remove(); // `.editor` 要素を削除
+
+	                // 前の `editor` 要素にフォーカスを移動するための処理
+	                if (previousEditor && previousEditor.classList.contains('editor')) {
+	                    var editableContent = previousEditor.querySelector('[contenteditable="true"]');
+	                    if (editableContent) {
+	                        editableContent.focus();
+
+	                        // カーソルを要素の最後に移動
+	                        var range = document.createRange();
+	                        var sel = window.getSelection();
+	                        range.selectNodeContents(editableContent);
+	                        range.collapse(false); // false は range の末尾にカーソルを設定
+	                        sel.removeAllRanges();
+	                        sel.addRange(range);
+	                    }
 	                }
 	            }
 	        }
@@ -101,13 +123,6 @@ document.addEventListener("DOMContentLoaded", function () {
 	    var targetIndex = direction === 'right' ? currentIndex - 2 : currentIndex + 2;
 	    return allEditables[targetIndex]; // 存在を確認してから返すことを推奨
 	}
-
-
-
-
-
-
-
 
     // 新しいエディター要素を作成する関数
     function createEditor() {
@@ -160,8 +175,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 //全体を選択してbackspaceできないとか、backspaceで前のdivに移動できないとか直したい。
-
-//十字キーの方向修正
 
 
 
