@@ -48,12 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	                var previousCharacter = editorDiv.querySelector('.character[contenteditable="true"]');
 	                if (previousCharacter) {
 	                    previousCharacter.focus();
-	                    var range = document.createRange();
-	                    var sel = window.getSelection();
-	                    range.selectNodeContents(previousCharacter);
-	                    range.collapse(false); // false は range の末尾にカーソルを設定
-	                    sel.removeAllRanges();
-	                    sel.addRange(range);
+	                    moveCursorToEnd(previousCharacter); // カーソルを要素の最後に移動
 	                    return; // この処理で終了
 	                }
 	            }
@@ -70,20 +65,28 @@ document.addEventListener("DOMContentLoaded", function () {
 	                    var editableContent = previousEditor.querySelector('[contenteditable="true"]');
 	                    if (editableContent) {
 	                        editableContent.focus();
-
-	                        // カーソルを要素の最後に移動
-	                        var range = document.createRange();
-	                        var sel = window.getSelection();
-	                        range.selectNodeContents(editableContent);
-	                        range.collapse(false); // false は range の末尾にカーソルを設定
-	                        sel.removeAllRanges();
-	                        sel.addRange(range);
+	                        moveCursorToEnd(editableContent); // カーソルを要素の最後に移動
+	                    }
+	                    var previousScenario = previousEditor.querySelector('.scenario[contenteditable="true"]');
+	                    if (previousScenario && previousScenario.textContent.trim() !== "") {
+	                        previousScenario.focus();
+	                        moveCursorToEnd(previousScenario); // カーソルを要素の最後に移動
 	                    }
 	                }
 	            }
 	        }
 	    }
 	});
+	// カーソルを要素の最後に移動する関数
+	function moveCursorToEnd(element) {
+	    var range = document.createRange();
+	    var sel = window.getSelection();
+	    range.selectNodeContents(element);
+	    range.collapse(false); // false は range の末尾にカーソルを設定
+	    sel.removeAllRanges();
+	    sel.addRange(range);
+	}
+
 
 	//十字キーの処理
 	document.addEventListener("keydown", function (event) {
