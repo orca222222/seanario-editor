@@ -12,6 +12,42 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Backspace" && event.target.getAttribute("contenteditable") === "true" && event.target.textContent.trim() === "") {
+        event.preventDefault(); // デフォルトのバックスペースの挙動をキャンセル
+        var editorDiv = event.target.closest('.editor'); // 親の `.editor` 要素を取得
+        if (editorDiv) {
+            // 前の `editor` 要素を取得
+            var previousEditor = editorDiv.previousElementSibling;
+
+            editorDiv.remove(); // `.editor` 要素を削除
+
+            // 前の `editor` 要素にフォーカスを移動するための処理
+            if (previousEditor && previousEditor.classList.contains('editor')) {
+                var editableContent = previousEditor.querySelector('[contenteditable="true"]');
+                if (editableContent) {
+                    editableContent.focus();
+
+                    // カーソルを要素の最後に移動
+                    var range = document.createRange();
+                    var sel = window.getSelection();
+                    range.selectNodeContents(editableContent);
+                    range.collapse(false); // false は range の末尾にカーソルを設定
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+                }
+            }
+        }
+    }
+});
+
+
+
+
+
+
+
+
     // 新しいエディター要素を作成する関数
     function createEditor() {
         // テンプレートのエディター要素を取得
@@ -126,6 +162,10 @@ function setInputValue(number) {
         }
     }
 }
+
+
+
+
 
 
 //ここまでGPT
