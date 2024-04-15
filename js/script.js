@@ -174,6 +174,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+
+
     // 最初にひとつ追加しておく
     createEditor();
 });
@@ -242,6 +244,36 @@ function setInputValue(number) {
 }
 
 
+// characterの変数を変更する
+document.addEventListener("DOMContentLoaded", function () {
+    // 10個のボタンに対してイベントリスナーを設定
+    for (let i = 1; i <= 10; i++) {
+        let button = document.getElementById("button" + i);
+        let input = document.getElementById("input" + i); // 対応する入力フィールドを取得
+
+        // ボタンのクリックイベント
+        button.addEventListener("click", function () {
+            updateCharacter(i, input.value); // グローバル変数を更新する関数を呼び出す
+        });
+
+        // 入力フィールドでのエンターキー押下イベント
+        input.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); // エンターキーのデフォルトの挙動をキャンセル
+                updateCharacter(i, input.value); // グローバル変数を更新する関数を呼び出す
+            }
+        });
+    }
+});
+
+// キャラクター情報を更新する関数
+function updateCharacter(index, value) {
+    let trimmedValue = value.trim(); // 入力値を取得し、前後の空白を削除
+    if (trimmedValue) { // 入力値が空でない場合
+        window["character" + index] = trimmedValue; // グローバル変数を更新
+        alert("Character " + index + " updated to: " + trimmedValue); // 確認のためのアラートを表示
+    }
+}
 
 
 
@@ -250,10 +282,3 @@ function setInputValue(number) {
 
 //ボタンを押して変数の変更
 
-document.getElementById("button1").addEventListener("click",function() {
-	
-	let userInput = document.getElementById("userInput").value;
-	if (userInput.trim() !== "") {
-		character1 = userInput;
-	}
-})
